@@ -44,4 +44,4 @@ class TestAPI(APITestCase):
         url = '/api/v1/user/login'
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + test_token)
         response = self.client.delete(url, format='json')
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)      
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
