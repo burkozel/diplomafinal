@@ -17,9 +17,9 @@ from rest_framework.response import Response
 from .models import Shop, Category, ProductInfo, Product, Parameter, ProductParameter, Order, ConfirmEmailToken, OrderInfo, Contact
 from .serializers import UserSerializer, ProductInfoSerializer, ContactSerializer, OrderSerializer, CategorySerializer, ShopSerializer, OrderItemSerializer
 from .signals import new_user_registered, new_order
+from rest_framework.viewsets import ModelViewSet
 
 
-# 4 этап. Регистрация
 class AccountRegister(APIView):
     def post(self, request, *args, **kwargs):
         if {'name', 'surname', 'email', 'password', 'company', 'position'}.issubset(request.data):
@@ -129,6 +129,17 @@ class ProductInfoView(APIView):
             'product_parameters__parameter').distinct()
         serializer = ProductInfoSerializer(queryset, many=True)
         return Response(serializer.data)
+
+"""    
+class ProductInfoViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    http_method_names = ['get', ]
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(id=self.kwargs.get('id'))
+        return queryset
+"""
 
 
 class BasketView(APIView):
